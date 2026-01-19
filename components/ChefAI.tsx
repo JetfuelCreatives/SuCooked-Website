@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { getChefRecommendation } from '../services/geminiService';
+import { getChefRecommendation } from '../services/geminiService.ts';
 import { Sparkles, Utensils, Loader2 } from 'lucide-react';
 
 export const ChefAI: React.FC = () => {

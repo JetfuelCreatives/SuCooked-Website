@@ -1,10 +1,19 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Standard browser environments like GitHub Pages don't have 'process' defined globally.
+// We use a safe check to ensure the app doesn't crash on initialization.
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || "";
+  } catch {
+    return "";
+  }
+};
 
 export const getChefRecommendation = async (userPreference: string) => {
   try {
+    const ai = new GoogleGenAI({ apiKey: getApiKey() });
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `You are a world-class executive chef for SuCooked. Based on this preference: "${userPreference}", suggest a meal concept that fits our premium brand identity. Keep it concise and enticing.`,

@@ -1,5 +1,5 @@
 
-import { MenuItem, Testimonial, BlogPost, Recipe } from './types';
+import { MenuItem, Testimonial, BlogPost, Recipe } from './types.ts';
 
 export const MENU_ITEMS: MenuItem[] = [
   {
@@ -48,7 +48,7 @@ export const MENU_ITEMS: MenuItem[] = [
     img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=80"
   },
   {
-    id: 6,
+    id: 2,
     title: "Herb-Crusted Chicken",
     desc: "Free-range chicken breast with cauliflower puree and sautéed greens.",
     price: 190,
