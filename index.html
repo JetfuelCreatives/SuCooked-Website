@@ -10,14 +10,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script>
-      // Shim process.env for browser compatibility
-      window.process = { env: { API_KEY: '' } };
-      
-      // Error tracking for debugging deployment
-      window.onerror = function(msg, url, lineNo, columnNo, error) {
-        console.error('Deployment Error: ', msg, 'at', url, ':', lineNo);
-        return false;
+      // Shim process for libraries that expect it
+      window.process = { 
+        env: { NODE_ENV: 'production', API_KEY: '' },
+        cwd: () => '/',
       };
+
+      // Enhanced error logging to capture initialization failures on-screen
+      window.addEventListener('error', function(event) {
+        console.error('Initialization Error:', event.error || event.message);
+        const root = document.getElementById('root');
+        if (root && (root.innerHTML === '' || root.innerHTML.includes('Preparing'))) {
+          root.innerHTML = '<div style="padding: 40px; color: #1A1A1A; background: #F9F7F2; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-family: \'Playfair Display\', serif;">' +
+            '<h2 style="color: #C68E59; margin-bottom: 20px;">Culinary Interruption</h2>' + 
+            '<p style="max-width: 500px; margin-bottom: 20px; font-family: Lato, sans-serif; opacity: 0.7;">We encountered an issue while preparing the interface. This is often due to browser module resolution.</p>' +
+            '<code style="font-size: 11px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; display: block; text-align: left; max-width: 90%; overflow-x: auto;">' + (event.error ? event.error.stack || event.error.message : event.message) + '</code>' +
+            '<button onclick="location.reload()" style="margin-top: 30px; padding: 12px 24px; background: #1A1A1A; color: #fff; border: none; cursor: pointer; font-family: Lato, sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Retry Service</button>' +
+            '</div>';
+        }
+      });
 
       tailwind.config = {
         theme: {
@@ -63,10 +74,10 @@
   <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.2.3",
-    "react-dom": "https://esm.sh/react-dom@19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.562.0?external=react",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react,react-dom",
     "@google/genai": "https://esm.sh/@google/genai@1.37.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"

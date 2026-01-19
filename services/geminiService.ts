@@ -1,19 +1,34 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Standard browser environments like GitHub Pages don't have 'process' defined globally.
-// We use a safe check to ensure the app doesn't crash on initialization.
 const getApiKey = () => {
   try {
-    return process.env.API_KEY || "";
+    if (typeof window !== 'undefined' && (window as any).process?.env?.API_KEY) {
+      return (window as any).process.env.API_KEY;
+    }
+    if (typeof process !== 'undefined' && process.env?.API_KEY) {
+      return process.env.API_KEY;
+    }
+    return "";
   } catch {
     return "";
   }
 };
 
 export const getChefRecommendation = async (userPreference: string) => {
+  const apiKey = getApiKey();
+  
+  if (!apiKey) {
+    console.warn("Chef AI: Running in inspiration mode (no API key).");
+    return {
+      suggestionTitle: "The Chef's Secret Inspiration",
+      description: "Our executive chef is currently curating new flavors. For a specific recommendation, please ensure the system is authenticated.",
+      winePairing: "A full-bodied Cabernet Sauvignon"
+    };
+  }
+
   try {
-    const ai = new GoogleGenAI({ apiKey: getApiKey() });
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `You are a world-class executive chef for SuCooked. Based on this preference: "${userPreference}", suggest a meal concept that fits our premium brand identity. Keep it concise and enticing.`,
@@ -32,7 +47,7 @@ export const getChefRecommendation = async (userPreference: string) => {
       }
     });
 
-    return JSON.parse(response.text);
+    return JSON.parse(response.text || "{}");
   } catch (error) {
     console.error("Gemini Error:", error);
     return null;
