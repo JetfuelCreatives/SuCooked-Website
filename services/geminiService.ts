@@ -1,9 +1,21 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Standardizing environment variable access for Vite/Production
+const apiKey = process.env.API_KEY || "";
+
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getChefRecommendation = async (userPreference: string) => {
+  if (!ai) {
+    console.warn("Chef AI is unavailable: API Key not found in environment.");
+    return {
+      suggestionTitle: "Executive Choice: Signature Braised Lamb",
+      description: "Our digital Chef is currently offline. We highly recommend our signature slow-braised lamb shank for a true gourmet experience.",
+      winePairing: "A complex, aged Cabernet Sauvignon"
+    };
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -23,9 +35,10 @@ export const getChefRecommendation = async (userPreference: string) => {
       }
     });
 
-    return JSON.parse(response.text);
+    const text = response.text;
+    return text ? JSON.parse(text) : null;
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini Chef AI Error:", error);
     return null;
   }
 };
