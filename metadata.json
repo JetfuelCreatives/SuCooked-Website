@@ -1,0 +1,7 @@
+{
+  "name": "SuCooked | Gourmet Meals Delivered",
+  "description": "A premium gourmet meal delivery platform offering chef-curated dishes with a luxury dining experience at home.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
