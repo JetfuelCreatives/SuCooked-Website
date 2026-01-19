@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ShoppingBag, Menu, X } from 'lucide-react';
-import { View } from '../types.ts';
+import { View } from '../types';
 
 interface HeaderProps {
   cartCount: number;
