@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,19 +15,23 @@
         cwd: () => '/',
       };
 
-      // Enhanced error logging to capture initialization failures on-screen
-      window.addEventListener('error', function(event) {
-        console.error('Initialization Error:', event.error || event.message);
+      // Handle script loading errors with clear diagnostic info
+      function handleScriptError(script) {
+        console.error('SuCooked: Failed to load module:', script.src);
         const root = document.getElementById('root');
-        if (root && (root.innerHTML === '' || root.innerHTML.includes('Preparing'))) {
-          root.innerHTML = '<div style="padding: 40px; color: #1A1A1A; background: #F9F7F2; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-family: \'Playfair Display\', serif;">' +
-            '<h2 style="color: #C68E59; margin-bottom: 20px;">Culinary Interruption</h2>' + 
-            '<p style="max-width: 500px; margin-bottom: 20px; font-family: Lato, sans-serif; opacity: 0.7;">We encountered an issue while preparing the interface. This is often due to browser module resolution.</p>' +
-            '<code style="font-size: 11px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; display: block; text-align: left; max-width: 90%; overflow-x: auto;">' + (event.error ? event.error.stack || event.error.message : event.message) + '</code>' +
-            '<button onclick="location.reload()" style="margin-top: 30px; padding: 12px 24px; background: #1A1A1A; color: #fff; border: none; cursor: pointer; font-family: Lato, sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Retry Service</button>' +
-            '</div>';
+        if (root) {
+          root.innerHTML = `
+            <div style="padding: 40px; color: #1A1A1A; background: #F9F7F2; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-family: 'Playfair Display', serif;">
+              <h2 style="color: #C68E59; margin-bottom: 20px;">Interface Load Failure</h2>
+              <p style="max-width: 500px; margin-bottom: 20px; font-family: Lato, sans-serif; opacity: 0.7;">
+                The application module could not be loaded. This typically indicates a path resolution error or a network interruption.
+              </p>
+              <code style="font-size: 11px; background: #fff; padding: 10px; border: 1px solid #ddd; display: block; margin-bottom: 20px;">Attempted Path: ${script.src}</code>
+              <button onclick="location.reload()" style="padding: 12px 24px; background: #1A1A1A; color: #fff; border: none; cursor: pointer; font-family: Lato, sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Reload Application</button>
+            </div>
+          `;
         }
-      });
+      }
 
       tailwind.config = {
         theme: {
@@ -87,6 +90,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <script type="module" src="./index.tsx" onerror="handleScriptError(this)"></script>
   </body>
 </html>

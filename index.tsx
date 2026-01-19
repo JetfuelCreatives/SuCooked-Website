@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
@@ -18,6 +17,6 @@ if (!container) {
     console.log("SuCooked System: Interface initialized successfully.");
   } catch (err) {
     console.error("SuCooked Error: Initialization failed.", err);
-    throw err; // Re-throw to trigger the global error listener in index.html
+    throw err;
   }
 }
