@@ -6,7 +6,21 @@ import { CartDrawer } from './components/CartDrawer';
 import { AuthModal } from './components/AuthModal';
 import { MENU_ITEMS, TESTIMONIALS, BLOG_POSTS, RECIPE_ITEMS } from './constants';
 import { Category, MenuItem, CartItem, View } from './types';
-import { ChevronRight, Play, Star, Instagram, Twitter, Facebook, ChevronDown, Clock, BarChart } from 'lucide-react';
+import { 
+  ChevronRight, 
+  Play, 
+  Star, 
+  Instagram, 
+  Twitter, 
+  Facebook, 
+  ChevronDown, 
+  Clock, 
+  BarChart,
+  MousePointer2,
+  Package,
+  UtensilsCrossed,
+  ArrowRight
+} from 'lucide-react';
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>('home');
@@ -15,6 +29,7 @@ const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
+  // Scroll to top on view change - essential for single-page state navigation
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [view]);
@@ -52,7 +67,7 @@ const App: React.FC = () => {
     switch (view) {
       case 'home':
         return (
-          <div className="animate-in fade-in duration-700">
+          <div className="animate-fade-in">
             {/* Hero Section */}
             <header className="relative h-[85vh] flex items-center justify-center text-center text-white overflow-hidden">
               <div className="absolute inset-0 z-0">
@@ -77,37 +92,16 @@ const App: React.FC = () => {
               </div>
             </header>
 
-            {/* How It Works Section */}
-            <section className="py-24 bg-white px-4">
-              <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl font-serif mb-4">Effortless Dining</h2>
-                  <p className="text-gray-500 max-w-2xl mx-auto">Fine dining quality in the comfort of your home. We handle the complexity, you enjoy the experience.</p>
-                </div>
-                <div className="grid md:grid-cols-3 gap-12 text-center">
-                  {[
-                    { icon: '🖱️', title: '1. Choose', desc: 'Select from our rotating weekly menu of chef-curated dishes.' },
-                    { icon: '📦', title: '2. We Cook & Deliver', desc: 'Our chefs prep fresh meals and deliver them chilled to your door.' },
-                    { icon: '🍽️', title: '3. Heat & Enjoy', desc: 'Ready in minutes. Plating instructions included for the full experience.' }
-                  ].map((step, idx) => (
-                    <div key={idx} className="group p-8 border border-transparent hover:border-accent/10 hover:bg-cream transition-all duration-300 rounded-lg">
-                      <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform">{step.icon}</div>
-                      <h3 className="text-xl font-serif mb-4">{step.title}</h3>
-                      <p className="text-gray-500 leading-relaxed">{step.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-            
             {/* Teaser Menu */}
             <section className="py-24 bg-cream">
               <div className="max-w-7xl mx-auto px-4 text-center">
                 <h2 className="text-4xl font-serif mb-12">Taste of the Week</h2>
                 <div className="grid md:grid-cols-3 gap-8 mb-12">
                    {MENU_ITEMS.slice(0, 3).map(item => (
-                     <div key={item.id} className="bg-white p-4 rounded-lg shadow-sm">
-                       <img src={item.img} className="w-full h-48 object-cover rounded-md mb-4" />
+                     <div key={item.id} className="bg-white p-4 rounded-lg shadow-sm group cursor-pointer hover:shadow-md transition-shadow">
+                       <div className="overflow-hidden rounded-md mb-4">
+                         <img src={item.img} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt={item.title} />
+                       </div>
                        <h4 className="font-serif text-xl">{item.title}</h4>
                      </div>
                    ))}
@@ -117,12 +111,66 @@ const App: React.FC = () => {
                 </button>
               </div>
             </section>
+
+            {/* How It Works Section */}
+            <section className="py-24 bg-white px-4 border-b border-dark/5">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl font-serif mb-4">Effortless Dining</h2>
+                  <p className="text-gray-500 max-w-2xl mx-auto">Fine dining quality in the comfort of your home. We handle the complexity, you enjoy the experience.</p>
+                </div>
+                <div className="grid md:grid-cols-3 gap-12 text-center">
+                  {[
+                    { icon: <MousePointer2 size={48} />, title: '1. Choose', desc: 'Select from our rotating weekly menu of chef-curated dishes.' },
+                    { icon: <Package size={48} />, title: '2. We Cook & Deliver', desc: 'Our chefs prep fresh meals and deliver them chilled to your door.' },
+                    { icon: <UtensilsCrossed size={48} />, title: '3. Heat & Enjoy', desc: 'Ready in minutes. Plating instructions included for the full experience.' }
+                  ].map((step, idx) => (
+                    <div key={idx} className="group p-8 border border-transparent hover:border-accent/10 hover:bg-cream transition-all duration-300 rounded-lg">
+                      <div className="flex justify-center mb-6 text-accent transform group-hover:scale-110 transition-transform">
+                        {step.icon}
+                      </div>
+                      <h3 className="text-xl font-serif mb-4">{step.title}</h3>
+                      <p className="text-gray-500 leading-relaxed">{step.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Catering Teaser Section */}
+            <section className="bg-white text-dark overflow-hidden min-h-[600px] flex items-center border-t border-dark/5">
+              <div className="flex flex-col md:flex-row w-full h-full">
+                <div className="w-full md:w-1/2 flex flex-col justify-center px-8 py-20 lg:px-24 bg-white">
+                  <span className="text-xs font-bold uppercase tracking-[0.4em] mb-6 text-accent">Special Events</span>
+                  <h2 className="text-5xl lg:text-7xl font-serif leading-tight mb-8 max-w-lg">
+                    Catering for <br />
+                    <span className="italic font-normal">Every Occasion</span>
+                  </h2>
+                  <p className="text-gray-500 text-lg mb-12 max-w-md leading-relaxed">
+                    From intimate gatherings to corporate events, our catering team delivers exceptional cuisine tailored to your needs.
+                  </p>
+                  <button 
+                    onClick={() => setView('catering')}
+                    className="w-fit flex items-center gap-3 border border-dark px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-dark hover:text-white transition-all duration-300"
+                  >
+                    Request a Quote <ArrowRight size={16} />
+                  </button>
+                </div>
+                <div className="w-full md:w-1/2 bg-cream flex items-center justify-center py-24 md:py-0 relative overflow-hidden group">
+                  <div className="text-[120px] lg:text-[220px] font-serif font-bold text-accent/20 select-none transform transition-all duration-1000 group-hover:scale-105 group-hover:text-accent/30">
+                    Su
+                  </div>
+                  <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl"></div>
+                  <div className="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl"></div>
+                </div>
+              </div>
+            </section>
           </div>
         );
 
       case 'meals':
         return (
-          <div className="animate-in fade-in duration-700 bg-cream min-h-screen py-24 px-4">
+          <div className="animate-fade-in bg-cream min-h-screen py-24 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-12">
                 <span className="text-accent font-bold uppercase tracking-[0.3em] text-xs">Curated Selection</span>
@@ -130,7 +178,6 @@ const App: React.FC = () => {
                 <p className="text-gray-500 max-w-xl mx-auto">Sourced from the finest local purveyors, prepared with Michelin-standard techniques.</p>
               </div>
 
-              {/* Filters */}
               <div className="flex justify-center flex-wrap gap-4 mb-16">
                 {(['All', 'Mains', 'Vegetarian', 'Keto'] as Category[]).map(cat => (
                   <button
@@ -172,7 +219,7 @@ const App: React.FC = () => {
 
       case 'recipes':
         return (
-          <div className="animate-in fade-in duration-700 bg-white min-h-screen py-24 px-4">
+          <div className="animate-fade-in bg-white min-h-screen py-24 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-16 mb-24 items-center">
                 <div>
@@ -181,7 +228,7 @@ const App: React.FC = () => {
                   <ChefAI />
                 </div>
                 <div className="relative aspect-square">
-                   <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover rounded-lg shadow-2xl" />
+                   <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover rounded-lg shadow-2xl" alt="Chef Cooking" />
                 </div>
               </div>
 
@@ -191,7 +238,7 @@ const App: React.FC = () => {
                    {RECIPE_ITEMS.map(recipe => (
                      <div key={recipe.id} className="group cursor-pointer">
                         <div className="relative h-64 overflow-hidden rounded-lg mb-6">
-                           <img src={recipe.image} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" />
+                           <img src={recipe.image} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" alt={recipe.title} />
                            <div className="absolute top-4 left-4 flex gap-2">
                              <span className="bg-white/90 px-3 py-1 text-[10px] font-bold uppercase rounded flex items-center gap-1"><Clock size={12}/> {recipe.time}</span>
                              <span className="bg-white/90 px-3 py-1 text-[10px] font-bold uppercase rounded flex items-center gap-1"><BarChart size={12}/> {recipe.difficulty}</span>
@@ -209,8 +256,8 @@ const App: React.FC = () => {
 
       case 'catering':
         return (
-          <div className="animate-in slide-in-from-bottom duration-700 bg-cream">
-            <section className="scroll-mt-20 bg-white">
+          <div className="animate-fade-in bg-cream min-h-screen">
+            <section className="bg-white">
               <div className="flex flex-col lg:flex-row min-h-screen">
                 <div className="lg:w-1/2 p-8 lg:p-24 flex flex-col justify-center bg-dark text-white">
                   <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4">Exclusive Events</span>
@@ -226,14 +273,14 @@ const App: React.FC = () => {
                 </div>
                 <div className="lg:w-1/2 bg-[#F3F4F6] p-8 lg:p-24 flex items-center justify-center">
                   <div className="bg-white p-8 md:p-12 w-full max-w-2xl shadow-xl rounded-sm">
-                    <h3 className="text-2xl font-bold mb-10 tracking-tight">Request a Quote</h3>
+                    <h3 className="text-2xl font-bold mb-10 tracking-tight text-dark">Request a Quote</h3>
                     <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                       <div className="grid md:grid-cols-2 gap-6">
                         <input type="text" placeholder="Full Name" className="w-full p-4 bg-[#F9FAFB] border border-transparent focus:border-dark/10 focus:bg-white outline-none rounded-sm" />
                         <input type="email" placeholder="Email" className="w-full p-4 bg-[#F9FAFB] border border-transparent focus:border-dark/10 focus:bg-white outline-none rounded-sm" />
                       </div>
                       <div className="grid md:grid-cols-2 gap-6">
-                         <select className="w-full p-4 bg-[#F9FAFB] outline-none rounded-sm appearance-none">
+                         <select className="w-full p-4 bg-[#F9FAFB] outline-none rounded-sm appearance-none cursor-pointer">
                             <option>Event Type</option>
                             <option>Wedding</option>
                             <option>Corporate</option>
@@ -253,7 +300,7 @@ const App: React.FC = () => {
 
       case 'about':
         return (
-          <div className="animate-in fade-in duration-700 bg-dark text-white min-h-screen py-24 px-4">
+          <div className="animate-fade-in bg-dark text-white min-h-screen py-24 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-24 items-center">
                 <div>
@@ -265,8 +312,8 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                   <img src="https://images.unsplash.com/photo-1541614101331-1a5a3a194e90?auto=format&fit=crop&w=800&q=80" className="rounded-lg h-80 w-full object-cover" />
-                   <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80" className="rounded-lg h-80 w-full object-cover mt-12" />
+                   <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=800&q=80" alt="Executive Chef" className="rounded-lg h-80 w-full object-cover shadow-2xl" />
+                   <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Gourmet Dish" className="rounded-lg h-80 w-full object-cover mt-12 shadow-2xl" />
                 </div>
               </div>
             </div>
@@ -275,7 +322,7 @@ const App: React.FC = () => {
 
       case 'blog':
         return (
-          <div className="animate-in fade-in duration-700 bg-cream min-h-screen py-24 px-4">
+          <div className="animate-fade-in bg-cream min-h-screen py-24 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-5xl font-serif mb-4">Culinary Journals</h2>
@@ -285,7 +332,7 @@ const App: React.FC = () => {
                 {BLOG_POSTS.map(post => (
                   <article key={post.id} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all group">
                     <div className="relative h-64 overflow-hidden">
-                       <img src={post.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                       <img src={post.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
                        <div className="absolute top-4 left-4 bg-accent text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
                           {post.category}
                        </div>
@@ -312,7 +359,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-cream">
+    <div className="min-h-screen flex flex-col font-sans bg-cream text-dark">
       <Header 
         cartCount={cartItems.reduce((acc, curr) => acc + curr.quantity, 0)} 
         onCartOpen={() => setIsCartOpen(true)}
@@ -338,12 +385,11 @@ const App: React.FC = () => {
         {renderContent()}
       </main>
 
-      {/* Footer */}
       <footer className="bg-dark text-white pt-24 pb-12 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
             <div>
-              <button onClick={() => setView('home')}>
+              <button onClick={() => setView('home')} className="focus:outline-none">
                 <h1 className="text-3xl font-bold tracking-tighter mb-6">Su<span className="text-accent">Cooked</span></h1>
               </button>
               <p className="text-gray-500 leading-relaxed mb-6">Redefining the dining table through luxury meal delivery and ethical sourcing.</p>
@@ -378,13 +424,13 @@ const App: React.FC = () => {
               <h4 className="font-bold uppercase tracking-widest text-accent text-xs mb-8">Newsletter</h4>
               <p className="text-sm text-gray-500 mb-6 italic">Join the table for exclusive chef recipes and early menu access.</p>
               <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
-                <input type="email" placeholder="Your Email" className="bg-white/5 border border-white/10 p-3 rounded text-sm focus:outline-none focus:border-accent transition-colors" />
+                <input type="email" placeholder="Your Email" className="bg-white/5 border border-white/10 p-3 rounded text-sm focus:outline-none focus:border-accent transition-colors text-white" />
                 <button className="bg-accent text-white py-3 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-colors">Subscribe</button>
               </form>
             </div>
           </div>
           
-          <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/10 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/10 text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em] gap-6 text-center md:text-left">
             <p>&copy; 2024 SuCooked Delivery Services. All rights reserved.</p>
             <div className="flex gap-8">
               <button className="hover:text-white transition-colors">Privacy Policy</button>

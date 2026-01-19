@@ -99,7 +99,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "April 28, 2024",
     author: "Chef Sarah",
     category: "Ingredients",
-    image: "https://images.unsplash.com/photo-1534431057471-a4864f77c08b?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1515023115689-589c33041d3c?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: 3,
@@ -119,7 +119,7 @@ export const RECIPE_ITEMS: Recipe[] = [
     time: "30 mins",
     difficulty: "Easy",
     description: "The secret to our signature keto-friendly side dish.",
-    image: "https://images.unsplash.com/photo-1594911771141-8600f7762612?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1621841957884-1210fe19d66d?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: 2,
