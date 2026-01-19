@@ -1,5 +1,5 @@
 
-import { MenuItem, Testimonial, BlogPost, Recipe } from './types';
+import { MenuItem, Testimonial, BlogPost, Recipe } from './types.ts';
 
 export const MENU_ITEMS: MenuItem[] = [
   {

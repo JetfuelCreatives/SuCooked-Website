@@ -10,6 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script>
+      // Shim process.env for browser compatibility
+      window.process = { env: { API_KEY: '' } };
+      
+      // Error tracking for debugging deployment
+      window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Deployment Error: ', msg, 'at', url, ':', lineNo);
+        return false;
+      };
+
       tailwind.config = {
         theme: {
           extend: {
@@ -30,21 +39,37 @@
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { background-color: #F9F7F2; color: #1A1A1A; }
-      .masonry-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-auto-rows: 10px;
+      body { background-color: #F9F7F2; color: #1A1A1A; margin: 0; }
+      #root:empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        color: #C68E59;
+        background-color: #F9F7F2;
+      }
+      #root:empty::after {
+        content: "Preparing your gourmet experience...";
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
       }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react": "https://esm.sh/react@19.2.3",
+    "react-dom": "https://esm.sh/react-dom@19.2.3",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.562.0?external=react",
+    "@google/genai": "https://esm.sh/@google/genai@1.37.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
