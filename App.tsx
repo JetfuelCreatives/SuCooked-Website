@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { ChefAI } from './components/ChefAI';
-import { CartDrawer } from './components/CartDrawer';
-import { AuthModal } from './components/AuthModal';
-import { MENU_ITEMS, TESTIMONIALS, BLOG_POSTS, RECIPE_ITEMS } from './constants';
-import { Category, MenuItem, CartItem, View } from './types';
+import { Header } from './components/Header.tsx';
+import { ChefAI } from './components/ChefAI.tsx';
+import { CartDrawer } from './components/CartDrawer.tsx';
+import { AuthModal } from './components/AuthModal.tsx';
+import { MENU_ITEMS, TESTIMONIALS, BLOG_POSTS, RECIPE_ITEMS } from './constants.tsx';
+import { Category, MenuItem, CartItem, View } from './types.ts';
 import { 
   ChevronRight, 
   Play, 
@@ -29,7 +29,6 @@ const App: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  // Scroll to top on view change - essential for single-page state navigation
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [view]);

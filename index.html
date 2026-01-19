@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Babel for in-browser JSX/TSX transformation on GitHub Pages -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <script>
       tailwind.config = {
         theme: {
@@ -35,7 +38,6 @@
     </script>
     
     <style>
-      /* Ensure smooth transitions and hidden scrollbars during loads */
       html { scroll-behavior: smooth; }
       body { 
         background-color: #F9F7F2; 
@@ -44,7 +46,6 @@
         padding: 0;
         overflow-x: hidden;
       }
-      /* Custom scrollbar for premium feel */
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: #F9F7F2; }
       ::-webkit-scrollbar-thumb { background: #C68E59; border-radius: 10px; }
@@ -58,7 +59,6 @@
       }
     </style>
 
-    <!-- Import Map for GitHub Pages Compatibility -->
     <script type="importmap">
     {
       "imports": {
@@ -73,7 +73,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Entry point defined as a module to handle relative imports correctly -->
-    <script type="module" src="./index.tsx"></script>
+    <!-- Using type="text/babel" to tell Babel to transpile this module -->
+    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
   </body>
 </html>
