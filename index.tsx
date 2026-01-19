@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
@@ -14,3 +13,9 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// Inform index.html that the gourmet experience is ready
+// Fix: Access custom property on window using type assertion to any to satisfy TypeScript (Line 19-20)
+if ((window as any).hideAppLoader) {
+  (window as any).hideAppLoader();
+}
