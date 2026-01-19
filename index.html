@@ -4,19 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="SuCooked - Premium Gourmet Meals Delivered to Your Door" />
-    <meta name="theme-color" content="#1A1A1A" />
     <title>SuCooked | Gourmet Meals Delivered</title>
-    
-    <!-- Stylesheets -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Transpiler for TSX on GitHub Pages -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
     <script>
       tailwind.config = {
         theme: {
@@ -36,133 +28,28 @@
         }
       }
     </script>
-    
     <style>
       html { scroll-behavior: smooth; }
-      body { 
-        background-color: #F9F7F2; 
-        color: #1A1A1A;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-      }
-      
-      /* Premium Loading Screen */
-      #app-loader {
-        position: fixed;
-        inset: 0;
-        background: #1A1A1A;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.5s ease-out, visibility 0.5s;
-      }
-      
-      .loader-logo {
-        font-family: 'Playfair Display', serif;
-        color: white;
-        font-size: 2.5rem;
-        font-weight: bold;
-        letter-spacing: -0.05em;
-        margin-bottom: 1rem;
-      }
-      
-      .loader-logo span { color: #C68E59; }
-      
-      .loader-bar {
-        width: 200px;
-        height: 1px;
-        background: rgba(255,255,255,0.1);
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .loader-progress {
-        position: absolute;
-        height: 100%;
-        width: 50%;
-        background: #C68E59;
-        animation: progressMove 1.5s infinite ease-in-out;
-      }
-      
-      @keyframes progressMove {
-        0% { left: -50%; }
-        100% { left: 100%; }
-      }
-
-      .loader-text {
-        margin-top: 1.5rem;
-        color: rgba(255,255,255,0.4);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.3em;
-        font-weight: bold;
-      }
-
-      .error-display {
-        display: none;
-        color: #ff6b6b;
-        padding: 2rem;
-        text-align: center;
-        font-family: sans-serif;
+      body { background-color: #F9F7F2; color: #1A1A1A; }
+      .masonry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-rows: 10px;
       }
     </style>
-
-    <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
-        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-        "react": "https://esm.sh/react@^19.2.3",
-        "react/": "https://esm.sh/react@^19.2.3/",
-        "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-      }
-    }
-    </script>
-  </head>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
   <body>
-    <!-- Initial Loading State -->
-    <div id="app-loader">
-      <div class="loader-logo">Su<span>Cooked</span></div>
-      <div class="loader-bar"><div class="loader-progress"></div></div>
-      <div class="loader-text">Preparing Gourmet Experience</div>
-      <div id="init-error" class="error-display"></div>
-    </div>
-
     <div id="root"></div>
-
-    <script>
-      // Global Error Handler for GH Pages initialization
-      window.addEventListener('error', function(e) {
-        if (e.message.includes('Script error') || e.message.includes('SyntaxError')) {
-          const errorDiv = document.getElementById('init-error');
-          const loaderText = document.querySelector('.loader-text');
-          if (errorDiv) {
-            errorDiv.style.display = 'block';
-            errorDiv.innerHTML = 'Initialization failed. Please refresh or check browser compatibility.';
-            if (loaderText) loaderText.style.display = 'none';
-          }
-        }
-      });
-
-      // Function to hide loader once React mounts
-      window.hideAppLoader = function() {
-        const loader = document.getElementById('app-loader');
-        if (loader) {
-          loader.style.opacity = '0';
-          setTimeout(() => { loader.style.visibility = 'hidden'; }, 500);
-        }
-      };
-    </script>
-
-    <!-- Transpile and Run -->
-    <script 
-      type="text/babel" 
-      data-type="module" 
-      data-presets="typescript,react" 
-      src="./index.tsx"
-    ></script>
   </body>
 </html>
