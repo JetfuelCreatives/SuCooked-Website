@@ -1,22 +1,16 @@
+
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-const container = document.getElementById('root');
-
-if (!container) {
-  console.error("SuCooked Error: Mount target '#root' not found.");
-} else {
-  try {
-    const root = createRoot(container);
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-    console.log("SuCooked System: Interface initialized successfully.");
-  } catch (err) {
-    console.error("SuCooked Error: Initialization failed.", err);
-    throw err;
-  }
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
 }
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
